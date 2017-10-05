@@ -24,6 +24,16 @@ echo head(
     <li><b style="color:orangered;">Vérifiez que la prévisualisation ne présente pas de problèmes d'accentuation</b>, si c'est le cas vérifiez que le fichier CSV est bien <b>encodé en UTF-8</b></li>
 </ul>
 
+<?php
+    echo "<h1 style='margin-top:30px; margin-bottom:-10px;'>Date du dernier import : ";
+    $date = BibliothequeArtistesImport::getLastImportDate();
+    if ($date)
+        echo $date;
+    else
+        echo "aucun import réalisé";
+    echo "</h1>";
+?>
+
 <br /><br />
 <form action="#" method="post"  enctype="multipart/form-data" accept-charset="utf-8">
     <input class="button" type="file" name="file">

@@ -82,18 +82,15 @@ class BibliothequeArtistes_IndexController extends Omeka_Controller_AbstractActi
         $fields[THESIS][39]             = 'Tags';
         $fields[THESIS][9]              = 'DC:Source';
 
-        $explodeFields = array(3,39);
+        $explodeFields = array(3,39,41);
 
         if ($this->getRequest()->isPost() && isset($_POST['import'])  && $_POST['import'] == 'ok') {
 
             $lignes = unserialize(file_get_contents($this->file));
 
-            if (is_array($lignes)) {
-
-                $import = new SurbatoratImport();
-                $import->import($lignes);
-                unlink($this->file);
-            }
+            $import = new BibliothequeArtistesImport();
+            $import->import($lignes);
+            unlink($this->file);
 
         } elseif ($this->getRequest()->isPost() && $file = $_FILES['file']) {
 
@@ -109,6 +106,8 @@ class BibliothequeArtistes_IndexController extends Omeka_Controller_AbstractActi
 
                 foreach($line as $key => $l) {
 
+                    $itemType = ucfirst($line[1]);
+
                     if ($key != 1 && !in_array($key, $keys)) {
 
                         unset($line[$key]); // Delete line if not in $fields array.
@@ -117,7 +116,7 @@ class BibliothequeArtistes_IndexController extends Omeka_Controller_AbstractActi
 
                         if ($i > 0) {
 
-                            $itemType = $line[1];
+                            $line['itemTypeError'] = false;
 
                             $l = trim($l);
                             $l = ucfirst($l);
@@ -148,14 +147,19 @@ class BibliothequeArtistes_IndexController extends Omeka_Controller_AbstractActi
                                 else
                                     $line['_'.$key] = 'N/A';
                             }
+
+                            if ($itemType != BOOK && $itemType != BOOK_SECTION && $itemType != JOURNAL_ARTICLE && $itemType != THESIS) $line['itemTypeError'] = true;
                         }
+
                     }
                 }
+
 
                 if($i > 0)
                     $lignes[] = $line;
                 else
                     $entetes[] = $line;
+
 
                 foreach($entetes as $key => $entete) {
                     if ($key != 1 && !in_array($key, $keys))
@@ -166,6 +170,8 @@ class BibliothequeArtistes_IndexController extends Omeka_Controller_AbstractActi
             }
             fclose($path);
 
+
+            file_put_contents($this->file, serialize($lignes));
 
             $this->view->tmpFile = $file['tmp_name'];
             $this->view->entetes = $entetes;

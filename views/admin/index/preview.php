@@ -24,6 +24,12 @@ tr, td {
     &nbsp;&nbsp;<button onclick="javascript:history.back();">Précédent</button>
 </form>
 
+<style>
+tr.error {
+    background:#c98787;
+}
+</style>
+
 <?php
 
 // Affichage des données
@@ -38,11 +44,15 @@ foreach($entetes as $entete) {
 
 $i = 1;
 
+
 foreach($lignes as $kk => $ligne) {
 
-    echo '<tr>';
+    echo '<tr';
+    if ($ligne['itemTypeError']) echo ' class="error" title="Item Type incorrect" ';
+    echo '>';
     echo '<td style="text-align:center;">'.$i.'</td>';
     foreach($ligne as $key => $l) {
+
         if (substr($key, 0, 1) != '_') {
             if (is_array($l)) {
                 echo '<td style="position:relative">';
