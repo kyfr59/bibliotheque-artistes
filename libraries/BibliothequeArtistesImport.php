@@ -75,10 +75,11 @@ class BibliothequeArtistesImport
 
 			$itemType = $ligne[1];
 
+                        $tags = array();
+
 			if (!$ligne['itemTypeError']) {
 
 				foreach($ligne as $noColonne => $values) {
-
 
 					if (array_key_exists($noColonne, $fields[$itemType])) { // La clé existe dans le tableau de mapping)
 
@@ -116,12 +117,20 @@ class BibliothequeArtistesImport
 				}
 			}
 
-			if (!$ligne['itemTypeError']) {
+                        if (!$ligne['itemTypeError']) {
 
-				$elementTexts['Item Type Metadata']['Imported from'][] = array('text' => 'Zotero', 'html' => false);
-				$inserted_item 		= insert_item(array('item_type_id' => $itemTypes[$itemType], 'collection_id' => 1, 'public' => 1, 'featured' => ''), $elementTexts);
-		    	$inserted_item_id 	= $inserted_item->id;
-		    }
+                                $elementTexts['Item Type Metadata']['Imported from'][] = array('text' => 'Zotero', 'html' => false);
+
+                                $metadata['item_type_id']       = $itemTypes[$itemType];
+                                $metadata['collection_id']      = 1;
+                                $metadata['public']             = 1;
+                                $metadata['tags']               = $tags;
+                                                                                        var_dump($tags);
+
+                                $inserted_item = insert_item($metadata, $elementTexts);
+                                $inserted_item_id = $inserted_item->id;
+                        }
+
 
 		}
 
