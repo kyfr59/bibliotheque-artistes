@@ -12,62 +12,62 @@ class BibliothequeArtistesImport
 
 	public function import($lignes)
 	{
-        $color[BOOK]            		= 'orange';
-        $color[BOOK_SECTION]    		= '#336699';
-        $color[JOURNAL_ARTICLE] 		= 'green';
-        $color[THESIS]          		= 'orangered';
+	$color[BOOK]            		= 'orange';
+	$color[BOOK_SECTION]    		= '#336699';
+	$color[JOURNAL_ARTICLE] 		= 'green';
+	$color[THESIS]          		= 'orangered';
 
-        $fields[BOOK][4]                = 'DC:Title';
-        $fields[BOOK][3]                = 'DC:Creator';
-        $fields[BOOK][22]               = 'ITM:Collection';
-        $fields[BOOK][60]               = 'ITM:Edition';
-        $fields[BOOK][27]               = 'DC:Coverage';
-        $fields[BOOK][26]               = 'DC:Publisher';
-        $fields[BOOK][2]                = 'DC:Date';
-        $fields[BOOK][35]               = 'ITM:Extra';
-        $fields[BOOK][39]               = 'Tags';
-        $fields[BOOK][9]                = 'DC:Source';
+	$fields[BOOK][4]                = 'DC:Title';
+	$fields[BOOK][3]                = 'DC:Creator';
+	$fields[BOOK][22]               = 'ITM:Collection';
+	$fields[BOOK][60]               = 'ITM:Edition';
+	$fields[BOOK][27]               = 'DC:Coverage';
+	$fields[BOOK][26]               = 'DC:Publisher';
+	$fields[BOOK][2]                = 'DC:Date';
+	$fields[BOOK][35]               = 'ITM:Extra';
+	$fields[BOOK][39]               = 'Tags';
+	$fields[BOOK][9]                = 'DC:Source';
 
-        $fields[JOURNAL_ARTICLE][4]     = 'DC:Title';
-        $fields[JOURNAL_ARTICLE][3]     = 'DC:Creator';
-        $fields[JOURNAL_ARTICLE][5]     = 'ITM:Publication';
-        $fields[JOURNAL_ARTICLE][18]    = 'ITM:Volume';
-        $fields[JOURNAL_ARTICLE][17]    = 'ITM:Number';
-        $fields[JOURNAL_ARTICLE][15]    = 'ITM:Pages';
-        $fields[JOURNAL_ARTICLE][2]     = 'DC:Date';
-        $fields[JOURNAL_ARTICLE][35]    = 'ITM:Extra';
-        $fields[JOURNAL_ARTICLE][39]    = 'Tags';
-        $fields[JOURNAL_ARTICLE][9]     = 'DC:Source';
+	$fields[JOURNAL_ARTICLE][4]     = 'DC:Title';
+	$fields[JOURNAL_ARTICLE][3]     = 'DC:Creator';
+	$fields[JOURNAL_ARTICLE][5]     = 'ITM:Publication';
+	$fields[JOURNAL_ARTICLE][18]    = 'ITM:Volume';
+	$fields[JOURNAL_ARTICLE][17]    = 'ITM:Number';
+	$fields[JOURNAL_ARTICLE][15]    = 'ITM:Pages';
+	$fields[JOURNAL_ARTICLE][2]     = 'DC:Date';
+	$fields[JOURNAL_ARTICLE][35]    = 'ITM:Extra';
+	$fields[JOURNAL_ARTICLE][39]    = 'Tags';
+	$fields[JOURNAL_ARTICLE][9]     = 'DC:Source';
 
-        $fields[BOOK_SECTION][4]        = 'DC:Title';
-        $fields[BOOK_SECTION][3]        = 'DC:Creator';
-        $fields[BOOK_SECTION][5]        = 'DC:Subject';
-        $fields[BOOK_SECTION][18]       = 'ITM:Volume';
-        $fields[BOOK_SECTION][26]       = 'ITM:Edition';
-        $fields[BOOK_SECTION][27]       = 'DC:Coverage';
-        $fields[BOOK_SECTION][41]       = 'DC:Publisher';
-        $fields[BOOK_SECTION][2]        = 'DC:Date';
-        $fields[BOOK_SECTION][15]       = 'ITM:Pages';
-        $fields[BOOK_SECTION][35]       = 'ITM:Extra';
-        $fields[BOOK_SECTION][39]       = 'Tags';
-        $fields[BOOK_SECTION][9]        = 'DC:Source';
+	$fields[BOOK_SECTION][4]        = 'DC:Title';
+	$fields[BOOK_SECTION][3]        = 'DC:Creator';
+	$fields[BOOK_SECTION][5]        = 'DC:Subject';
+	$fields[BOOK_SECTION][18]       = 'ITM:Volume';
+	$fields[BOOK_SECTION][26]       = 'ITM:Edition';
+	$fields[BOOK_SECTION][27]       = 'DC:Coverage';
+	$fields[BOOK_SECTION][41]       = 'DC:Publisher';
+	$fields[BOOK_SECTION][2]        = 'DC:Date';
+	$fields[BOOK_SECTION][15]       = 'ITM:Pages';
+	$fields[BOOK_SECTION][35]       = 'ITM:Extra';
+	$fields[BOOK_SECTION][39]       = 'Tags';
+	$fields[BOOK_SECTION][9]        = 'DC:Source';
 
-        $fields[THESIS][4]              = 'DC:Title';
-        $fields[THESIS][3]              = 'DC:Creator';
-        $fields[THESIS][26]             = 'ITM:University';
-        $fields[THESIS][2]              = 'DC:Date';
-        $fields[THESIS][35]             = 'ITM:Extra';
-        $fields[THESIS][39]             = 'Tags';
-        $fields[THESIS][9]              = 'DC:Source';
+	$fields[THESIS][4]              = 'DC:Title';
+	$fields[THESIS][3]              = 'DC:Creator';
+	$fields[THESIS][26]             = 'ITM:University';
+	$fields[THESIS][2]              = 'DC:Date';
+	$fields[THESIS][35]             = 'ITM:Extra';
+	$fields[THESIS][39]             = 'Tags';
+	$fields[THESIS][9]              = 'DC:Source';
 
-        $itemTypes[BOOK] 			= 20;
-        $itemTypes[BOOK_SECTION] 	= 24;
-        $itemTypes[JOURNAL_ARTICLE] = 25;
-        $itemTypes[THESIS] 			= 26;
+	$itemTypes[BOOK] 			= 20;
+	$itemTypes[BOOK_SECTION] 	= 24;
+	$itemTypes[JOURNAL_ARTICLE] = 25;
+	$itemTypes[THESIS] 			= 26;
 
-        $explodeFields = array(3,39,41);
+	$explodeFields = array(3,39,41);
 
-        $nbLignes = 0;
+	$nbLignes = 0;
 
 		foreach($lignes as $noLigne => $ligne) {
 
@@ -75,7 +75,7 @@ class BibliothequeArtistesImport
 
 			$itemType = $ligne[1];
 
-                        $tags = array();
+			$tags = array();
 
 			if (!$ligne['itemTypeError']) {
 
@@ -85,7 +85,10 @@ class BibliothequeArtistesImport
 
 						if ($noColonne == 39) { // Ce sont des tags
 
-							$tags = $values;
+							foreach($values as $value) {
+								if(strlen(trim($value)))
+									$tags[] = $value;
+							}
 
 						} else {
 
@@ -117,19 +120,18 @@ class BibliothequeArtistesImport
 				}
 			}
 
-                        if (!$ligne['itemTypeError']) {
+			if (!$ligne['itemTypeError']) {
 
-                                $elementTexts['Item Type Metadata']['Imported from'][] = array('text' => 'Zotero', 'html' => false);
+				$elementTexts['Item Type Metadata']['Imported from'][] = array('text' => 'Zotero', 'html' => false);
 
-                                $metadata['item_type_id']       = $itemTypes[$itemType];
-                                $metadata['collection_id']      = 1;
-                                $metadata['public']             = 1;
-                                $metadata['tags']               = $tags;
-                                                                                        var_dump($tags);
+				$metadata['item_type_id']       = $itemTypes[$itemType];
+				$metadata['collection_id']      = 1;
+				$metadata['public']             = 1;
+				$metadata['tags']               = $tags;
 
-                                $inserted_item = insert_item($metadata, $elementTexts);
-                                $inserted_item_id = $inserted_item->id;
-                        }
+				$inserted_item = insert_item($metadata, $elementTexts);
+				$inserted_item_id = $inserted_item->id;
+			}
 
 
 		}
