@@ -125,7 +125,7 @@ class BibliothequeArtistesImport
 				$elementTexts['Item Type Metadata']['Imported from'][] = array('text' => 'Zotero', 'html' => false);
 
 				$metadata['item_type_id']       = $itemTypes[$itemType];
-				$metadata['collection_id']      = 3;
+				$metadata['collection_id']      = 1;
 				$metadata['public']             = 1;
 				$metadata['tags']               = $tags;
 
