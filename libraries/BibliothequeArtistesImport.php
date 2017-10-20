@@ -65,7 +65,7 @@ class BibliothequeArtistesImport
 	$itemTypes[JOURNAL_ARTICLE] = 25;
 	$itemTypes[THESIS] 			= 26;
 
-	$explodeFields = array(3,39,41);
+	$explodeFields = array(3,4,39,41);
 
 	$nbLignes = 0;
 
@@ -125,12 +125,11 @@ class BibliothequeArtistesImport
 				$elementTexts['Item Type Metadata']['Imported from'][] = array('text' => 'Zotero', 'html' => false);
 
 				$metadata['item_type_id']       = $itemTypes[$itemType];
-				$metadata['collection_id']      = 1;
+				$metadata['collection_id']      = 3;
 				$metadata['public']             = 1;
 				$metadata['tags']               = $tags;
 
 				$inserted_item = insert_item($metadata, $elementTexts);
-				$inserted_item_id = $inserted_item->id;
 			}
 
 
@@ -138,3 +137,4 @@ class BibliothequeArtistesImport
 
 	}
 }
+

@@ -63,7 +63,7 @@ class BibliothequeArtistes_IndexController extends Omeka_Controller_AbstractActi
 
         $fields[BOOK_SECTION][4]        = 'DC:Title';
         $fields[BOOK_SECTION][3]        = 'DC:Creator';
-        $fields[BOOK_SECTION][5]        = 'DC:Subject';
+        // $fields[BOOK_SECTION][5]        = 'DC:Subject';
         $fields[BOOK_SECTION][18]       = 'BookSection:Volume';
         $fields[BOOK_SECTION][26]       = 'BookSection:Edition';
         $fields[BOOK_SECTION][27]       = 'DC:Coverage';
@@ -82,7 +82,7 @@ class BibliothequeArtistes_IndexController extends Omeka_Controller_AbstractActi
         $fields[THESIS][39]             = 'Tags';
         $fields[THESIS][9]              = 'DC:Source';
 
-        $explodeFields = array(3,39,41);
+        $explodeFields = array(3,4,39,41);
 
         if ($this->getRequest()->isPost() && isset($_POST['import'])  && $_POST['import'] == 'ok') {
 
@@ -103,6 +103,8 @@ class BibliothequeArtistes_IndexController extends Omeka_Controller_AbstractActi
 
             $i = 0;
             while (($line = fgetcsv($path, 0, ",")) !== FALSE) {
+
+                $line = $this->prepareTitre($line);
 
                 foreach($line as $key => $l) {
 
@@ -178,6 +180,16 @@ class BibliothequeArtistes_IndexController extends Omeka_Controller_AbstractActi
             $this->view->lignes = $lignes;
             $this->render('preview');
         }
+    }
 
+    private function prepareTitre($ligne) {
+
+        if(ucfirst($ligne[1]) == BOOK_SECTION) {
+            if (strlen(trim($ligne[5]))) {
+                $ligne[4] = 'Titre du livre : '.$ligne[5].';Titre du chapitre : '.$ligne[4];
+                $ligne[5] = null;
+            }
+        }
+        return $ligne;
     }
 }
