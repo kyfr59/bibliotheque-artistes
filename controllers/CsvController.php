@@ -13,7 +13,7 @@
  * @package BibliothequeArtistes
  * @subpackage Controllers
  */
-class BibliothequeArtistes_IndexController extends Omeka_Controller_AbstractActionController
+class BibliothequeArtistes_CsvController extends Omeka_Controller_AbstractActionController
 {
     /**
      * Initialization controller
@@ -28,10 +28,6 @@ class BibliothequeArtistes_IndexController extends Omeka_Controller_AbstractActi
 
 
     public function indexAction() {
-
-    }
-
-    public function zoteroAction() {
 
         define('BOOK', 'Book');
         define('BOOK_SECTION', 'BookSection');
@@ -182,7 +178,7 @@ class BibliothequeArtistes_IndexController extends Omeka_Controller_AbstractActi
             $this->view->tmpFile = $file['tmp_name'];
             $this->view->entetes = $entetes;
             $this->view->lignes = $lignes;
-            //$this->render('preview');
+            $this->render('preview');
         }
     }
 
