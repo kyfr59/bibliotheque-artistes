@@ -94,84 +94,53 @@ class BibliothequeArtistes_CsvController extends Omeka_Controller_AbstractAction
 
         } elseif ($this->getRequest()->isPost() && $file = $_FILES['file']) {
 
-            $keys = array_unique(array_merge(array_keys($fields[BOOK]), array_keys($fields[JOURNAL_ARTICLE]), array_keys($fields[BOOK_SECTION]), array_keys($fields[THESIS])));
-
             if (!$file['tmp_name']) return;
 
             // Récupération du fichier CSV
             $path = fopen($file['tmp_name'], 'r');
 
             $i = 0;
-            while (($line = fgetcsv($path, 0, ",")) !== FALSE) {
 
-                $line = $this->prepareTitre($line);
+            while (($line = fgetcsv($path, 0, ";")) !== FALSE) {
 
-                foreach($line as $key => $l) {
+                $line = $this->prepareLigne($line);
 
-                    $itemType = ucfirst($line[1]);
-
-                    if ($key != 1 && !in_array($key, $keys)) {
-
-                        unset($line[$key]); // Delete line if not in $fields array.
-
-                    } else {
-
-                        if ($i > 0) {
-
-                            $line['itemTypeError'] = false;
-
-                            $l = trim($l);
-                            $l = ucfirst($l);
-                            $l = preg_replace('/^é/', 'E', $l, 1); // Replace é par E en début de phrase
-                            $l = str_replace("\t", '', $l); // remove tabs
-                            $l = str_replace("\n", '', $l); // remove new lines
-                            $l = str_replace("\r", '', $l); // remove carriage returns
-
-                            if (in_array($key, $explodeFields)) {
-                                $l = explode(';', $l);
-                                foreach($l as $kk => $v) {
-
-                                    $v = trim($v);
-                                    $v = ucfirst($v);
-                                    $v = preg_replace('/^é/', 'E', $v, 1); // Replace é par E en début de phrase
-                                    $v = str_replace("\t", '', $v); // remove tabs
-                                    $v = str_replace("\n", '', $v); // remove new lines
-                                    $v = str_replace("\r", '', $v); // remove carriage returns
-
-                                    $l[$kk] = $v;
-                                }
-                            }
-
-                            $line[$key] = $l;
-                            if($key>1) {
-                                if(isset($fields[$itemType][$key]))
-                                    $line['_'.$key] = $fields[$itemType][$key];
-                                else
-                                    $line['_'.$key] = 'N/A';
-                            }
-
-                            if ($itemType != BOOK && $itemType != BOOK_SECTION && $itemType != JOURNAL_ARTICLE && $itemType != THESIS) $line['itemTypeError'] = true;
-                        }
-
-                    }
+                if (empty($line[2]) && empty($line[3]) && empty($line[4])) { // Passe si le nom, prénom et titre est vide
+                    continue;
                 }
 
+                if ($i > 0 && !empty($line[29])) {
+
+                    $url = trim($line[29]);
+                    $ark = str_replace('https://catalogue.bnf.fr/ark:/12148/', '', $url);
+                    $ark = str_replace('http://catalogue.bnf.fr/ark:/12148/', '', $ark);
+                    $ark = str_replace('.public', '', $ark);
+                    $ark = str_replace('/PUBLIC', '', $ark);
+                    $ark = trim($ark);
+                    $ark = rtrim($ark, '/');
+                    $urlToCall = 'http://catoai.bnf.fr/oai2/OAIHandler?verb=GetRecord&metadataPrefix=oai_dc&identifier=oai:bnf.fr:catalogue/ark:/12148/'.$ark;
+                    $line['29_parsed'] = BibliothequeArtistesImport::callBnfOai($urlToCall);
+                }
+
+                if ($i > 0 && !empty($line[30])) {
+
+                    $url = trim($line[30]);
+
+                    $ark = str_replace('http://gallica.bnf.fr/ark:/12148/', '', $url);
+                    $ark = str_replace('https://gallica.bnf.fr/ark:/12148/', '', $ark);
+                    $ark = str_replace('.image', '', $ark);
+                    $urlToCall = 'http://gallica.bnf.fr/services/OAIRecord?ark=ark:/12148/'.$ark;
+                    $line['30_parsed'] = BibliothequeArtistesImport::callBnfOai($urlToCall, 'gallica');
+                }
 
                 if($i > 0)
                     $lignes[] = $line;
                 else
                     $entetes[] = $line;
-
-
-                foreach($entetes as $key => $entete) {
-                    if ($key != 1 && !in_array($key, $keys))
-                        unset($line[$key]); // Delete line if not in $fields array.
-                }
-
                 $i++;
             }
-            fclose($path);
 
+            fclose($path);
 
             file_put_contents($this->file, serialize($lignes));
 
@@ -182,14 +151,16 @@ class BibliothequeArtistes_CsvController extends Omeka_Controller_AbstractAction
         }
     }
 
-    private function prepareTitre($ligne) {
 
-        if(ucfirst($ligne[1]) == BOOK_SECTION) {
-            if (strlen(trim($ligne[5]))) {
-                $ligne[4] = 'Titre du livre : '.$ligne[5].';Titre du chapitre : '.$ligne[4];
-                $ligne[5] = null;
-            }
+
+    private function prepareLigne($line) {
+
+        // Converti le format natif Excel en UTF-8
+        foreach($line as $key => $l) {
+            $line[$key] = iconv( "Windows-1252", "UTF-8", $l );
         }
-        return $ligne;
+
+        return $line;
     }
+
 }

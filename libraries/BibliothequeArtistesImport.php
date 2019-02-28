@@ -136,5 +136,31 @@ class BibliothequeArtistesImport
 		}
 
 	}
+
+
+	public static function callBnfOai($url, $repository = "catalogue") {
+
+		$content = file_get_contents($url);
+        $xml = simplexml_load_string($content);
+
+        if ($repository == 'gallica') {
+
+			if ($xml->notice->record) {
+				$xmlMetadata = $xml->notice->record->metadata->children('oai_dc', TRUE)->children('dc', true);
+			} else {
+				return ['erreur' => 'Echec de la récupération des informations'];
+			}
+
+		} else {
+
+			if ($xml->GetRecord->record) {
+				$xmlMetadata = $xml->GetRecord->record->metadata->children('oai_dc', TRUE)->children('dc', true);
+			} else {
+				return ['erreur' => 'Echec de la récupération des informations'];
+			}
+		}
+
+        return json_decode(json_encode((array)$xmlMetadata), TRUE);
+	}
 }
 

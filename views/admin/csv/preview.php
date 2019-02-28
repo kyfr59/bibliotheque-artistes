@@ -48,28 +48,48 @@ $i = 1;
 foreach($lignes as $kk => $ligne) {
 
     echo '<tr';
-    if ($ligne['itemTypeError']) echo ' class="error" title="Item Type incorrect" ';
+    if (@$ligne['itemTypeError']) echo ' class="error" title="Item Type incorrect" ';
     echo '>';
-    echo '<td style="text-align:center;">'.$i.'</td>';
+    echo '<td class="main" style="text-align:center;">'.($i+1).'</td>';
+
     foreach($ligne as $key => $l) {
 
-        if (substr($key, 0, 1) != '_') {
-            if (is_array($l)) {
-                echo '<td style="position:relative">';
-                foreach($l as $k => $value) {
-                    if($value)
-                        echo '* '.$value.'<br>';
-                }
-                echo '<font color=red style="display:block; background:#ccc; font-size:9px; color:#555; padding:3px;position:absolute;bottom:1px;right:1px;">'.@$ligne['_'.$key].'<font>';
-                echo '</td>';
-            } else {
-                echo '<td style="position:relative">';
-                echo $l;
-                if (@$ligne['_'.$key])
-                    echo '<font color=red style="display:block; background:#ccc; font-size:9px; color:#555; padding:3px;position:absolute;bottom:1px;right:1px;">'.@$ligne['_'.$key].'<font>';
-                echo "</td>";
-            }
+        if (strpos($key, '_parsed')) {
+            continue;
         }
+
+        echo '<td style="position:relative">';
+
+        if($key == 29 && !empty($l)) {
+
+            echo '<table>';
+            echo '<tr><td colspan="2"><strong><a class="bnf" href="'.$l.'" target="_blank">'.$l.'</a></td>';
+            echo '<tr><td colspan="2"><strong>Informations collectées depuis le dépôt externe : </td>';
+            $infosBnf = $lignes[$kk]['29_parsed'];
+            foreach($infosBnf as $label => $infos) {
+                $class = $label == "erreur" ? "erreur" : '';
+                if (is_array($infos)) $infos = multi_implode($infos, " # ");
+                echo '<tr class="'.$class.'"><td><strong>'.ucfirst($label).'</strong></td><td>'.$infos.'</td></tr>';
+            }
+            echo '</table>';
+
+        } elseif($key == 30 && !empty($l)) {
+
+            echo '<table>';
+            echo '<tr><td colspan="2"><strong><a class="bnf" href="'.$l.'" target="_blank">'.$l.'</a></td>';
+            echo '<tr><td colspan="2"><strong>Informations collectées depuis le dépôt externe : </td>';
+            $infosBnf = $lignes[$kk]['30_parsed'];
+            foreach($infosBnf as $label => $infos) {
+                $class = $label == "erreur" ? "erreur" : '';
+                if (is_array($infos)) $infos = multi_implode($infos, " # ");
+                echo '<tr class="'.$class.'"><td><strong>'.ucfirst($label).'</strong></td><td>'.$infos.'</td></tr>';
+            }
+            echo '</table>';
+
+        } else {
+            echo $l;
+        }
+        echo "</td>";
     }
     echo '</tr>';
     $i++;
@@ -86,4 +106,34 @@ echo '</table>';
     &nbsp;&nbsp;<button onclick="javascript:history.back();">Précédent</button>
 </form>
 
+<style>
+td.main {
+   height: 150px;
+}
+a.bnf {
+    color:#C76941;
+    text-decoration: underline;
+}
+tr.erreur td {
+    color:red;
+}
+</style>
 
+<?php
+function multi_implode($array, $glue) {
+    $ret = '';
+
+    foreach ($array as $item) {
+        if (is_array($item)) {
+            $ret .= multi_implode($item, $glue) . $glue;
+        } else {
+            $ret .= $item . $glue;
+        }
+    }
+
+    $ret = substr($ret, 0, 0-strlen($glue));
+
+    return $ret;
+}
+
+?>
