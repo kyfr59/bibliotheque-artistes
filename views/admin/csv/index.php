@@ -36,9 +36,28 @@ echo head(
 
 <br /><br />
 <form action="#" method="post"  enctype="multipart/form-data" accept-charset="utf-8">
+    <p>Choisissez la collection dans laquelle ajouter les notices du fichier CSV :
+        <select id="collection" >
+            <option value="">Faites votre choix</option>
+            <?php foreach($collections as $collection): ?>
+                <option value="<?php echo $collection->id ?>"><?php echo $collection->getProperty("display_title"); ?></option>
+            <?php endforeach; ?>
+        </select>
+    </p>
     <input class="button" type="file" name="file">
-    <br /><br /><br /><input type="submit" value="Vérifier les données">
+    <br /><br /><br /><input id="submit" type="submit" value="Vérifier les données">
 </form>
+<script>
+jQuery(document).ready(function($) {
+    $("#submit").click(function () {
+        val = $("#collection :selected").val();
+        if (val.length === 0) {
+            alert("Vous devez sélectionner une collection");
+            return false;
+        }
+    });
+});
+</script>
 
 <?php echo foot(); ?>
 

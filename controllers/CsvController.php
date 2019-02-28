@@ -29,6 +29,8 @@ class BibliothequeArtistes_CsvController extends Omeka_Controller_AbstractAction
 
     public function indexAction() {
 
+        $this->view->collections = get_db()->getTable("Collection")->findBy(['public'=>'1']);
+
         define('BOOK', 'Book');
         define('BOOK_SECTION', 'BookSection');
         define('JOURNAL_ARTICLE', 'JournalArticle');
@@ -89,7 +91,7 @@ class BibliothequeArtistes_CsvController extends Omeka_Controller_AbstractAction
             $lignes = unserialize(file_get_contents($this->file));
 
             $import = new BibliothequeArtistesImport();
-            $import->import($lignes);
+            $import->importFromCsv($lignes);
             unlink($this->file);
 
         } elseif ($this->getRequest()->isPost() && $file = $_FILES['file']) {
