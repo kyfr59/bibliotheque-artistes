@@ -37,7 +37,7 @@ echo head(
 <br /><br />
 <form action="#" method="post"  enctype="multipart/form-data" accept-charset="utf-8">
     <p>Choisissez la collection dans laquelle ajouter les notices du fichier CSV :
-        <select id="collection" >
+        <select id="collection" name="collection_id">
             <option value="">Faites votre choix</option>
             <?php foreach($collections as $collection): ?>
                 <option value="<?php echo $collection->id ?>"><?php echo $collection->getProperty("display_title"); ?></option>

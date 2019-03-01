@@ -20,6 +20,7 @@ tr, td {
     <br />
     <input type="hidden" name="file" value="<?php echo $tmpFile ?>">
     <input type="hidden" name="import" value="ok">
+    <input type="hidden" name="collection_id" value="<?php echo $_POST['collection_id'] ?>">
     <input type="submit" value="Lancer l'import des notices">
     &nbsp;&nbsp;<button onclick="javascript:history.back();">Précédent</button>
 </form>
@@ -66,19 +67,6 @@ foreach($lignes as $kk => $ligne) {
             echo '<tr><td colspan="2"><strong><a class="bnf" href="'.$l.'" target="_blank">'.$l.'</a></td>';
             echo '<tr><td colspan="2"><strong>Informations collectées depuis le dépôt externe : </td>';
             $infosBnf = $lignes[$kk]['29_parsed'];
-            foreach($infosBnf as $label => $infos) {
-                $class = $label == "erreur" ? "erreur" : '';
-                if (is_array($infos)) $infos = multi_implode($infos, " # ");
-                echo '<tr class="'.$class.'"><td><strong>'.ucfirst($label).'</strong></td><td>'.$infos.'</td></tr>';
-            }
-            echo '</table>';
-
-        } elseif($key == 30 && !empty($l)) {
-
-            echo '<table>';
-            echo '<tr><td colspan="2"><strong><a class="bnf" href="'.$l.'" target="_blank">'.$l.'</a></td>';
-            echo '<tr><td colspan="2"><strong>Informations collectées depuis le dépôt externe : </td>';
-            $infosBnf = $lignes[$kk]['30_parsed'];
             foreach($infosBnf as $label => $infos) {
                 $class = $label == "erreur" ? "erreur" : '';
                 if (is_array($infos)) $infos = multi_implode($infos, " # ");

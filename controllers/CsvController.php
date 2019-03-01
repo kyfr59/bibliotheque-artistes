@@ -86,13 +86,13 @@ class BibliothequeArtistes_CsvController extends Omeka_Controller_AbstractAction
 
         $explodeFields = array(3,4,39,41);
 
-        if ($this->getRequest()->isPost() && isset($_POST['import'])  && $_POST['import'] == 'ok') {
+        if ($this->getRequest()->isPost() && isset($_POST['import'])  && $_POST['import'] == 'ok' && $_POST['collection_id']) {
 
             $lignes = unserialize(file_get_contents($this->file));
 
             $import = new BibliothequeArtistesImport();
-            $import->importFromCsv($lignes);
-            unlink($this->file);
+            $import->importFromCsv($lignes, $_POST['collection_id']);
+            // unlink($this->file);
 
         } elseif ($this->getRequest()->isPost() && $file = $_FILES['file']) {
 
@@ -122,17 +122,6 @@ class BibliothequeArtistes_CsvController extends Omeka_Controller_AbstractAction
                     $ark = rtrim($ark, '/');
                     $urlToCall = 'http://catoai.bnf.fr/oai2/OAIHandler?verb=GetRecord&metadataPrefix=oai_dc&identifier=oai:bnf.fr:catalogue/ark:/12148/'.$ark;
                     $line['29_parsed'] = BibliothequeArtistesImport::callBnfOai($urlToCall);
-                }
-
-                if ($i > 0 && !empty($line[30])) {
-
-                    $url = trim($line[30]);
-
-                    $ark = str_replace('http://gallica.bnf.fr/ark:/12148/', '', $url);
-                    $ark = str_replace('https://gallica.bnf.fr/ark:/12148/', '', $ark);
-                    $ark = str_replace('.image', '', $ark);
-                    $urlToCall = 'http://gallica.bnf.fr/services/OAIRecord?ark=ark:/12148/'.$ark;
-                    $line['30_parsed'] = BibliothequeArtistesImport::callBnfOai($urlToCall, 'gallica');
                 }
 
                 if($i > 0)
