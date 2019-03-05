@@ -194,14 +194,22 @@ class BibliothequeArtistesImport
 		foreach($lignes as $key => $ligne) {
 
 			// Construction du nom complet
-			$nom    = ucfirst(trim($ligne[2]));
-        	$prenom = ucfirst(trim($ligne[3]));
-	        if($nom || $prenom) {
-	            if($nom)
-	                $ligne[1000] = $nom;
-	            if($prenom)
-	                $ligne[1000] .= ', '. $prenom;
-	        }
+			$nom    = explode("#", ucfirst(trim($ligne[2])));
+        	$prenom = explode("#", ucfirst(trim($ligne[3])));
+	        if(count($nom) || count($prenom)) {
+
+				$nomsComplets = '';
+	        	foreach($nom as $key => $n) {
+	        		$nomsComplets .= $n;
+	        		if (!empty($prenom[$key])) {
+	        			$nomsComplets .= ', '.$prenom[$key];
+	        		}
+	        		$nomsComplets .= '#';
+	        	}
+	        	$nomsComplets = rtrim($nomsComplets, '#');
+
+	        	$ligne[1000] = $nomsComplets;
+			}
 
 			foreach($ligne as $noColonne => $values) {
 
