@@ -15,8 +15,10 @@ echo head(
 <ul>
     <li>Téléchargez le <a target="_blank" href="<?php echo BIBLIOTHEQUEARTISTES_PLUGIN_WEB ?>modele.xlsx">fichier modèle</a> sur votre ordinateur</li>
     <li>Ouvrez-le avec Microsoft Excel</li>
-    <li>Remplissez-le en respectant les entêtes de colonnes</li>
+    <li>Aidez-vous du <a target="_blank" href="<?php echo BIBLIOTHEQUEARTISTES_PLUGIN_WEB ?>modele.xlsx">document explicatif</a> pour remplir le fichier Excel</li>
     <li>La première ligne est à supprimer, elle est donnée à titre d'exemple, mais la ligne contenant les entêtes doit être conservée</li>
+    <li>Vous pouvez utiliser le séparateur <strong>#</strong> pour ajouter plusieurs valeurs dans le même champ, par exemple pour <strong>Français#Anglais</strong> pour ajouter 2 langues</li>
+    <li>Il est conseiller de ne pas importer plus de 50 lignes (notices) lors du même import</li>
     <li>Une fois le fichier dûment rempli, choisissez <strong>"Enregister sous"</strong>, puis <strong>"Autres formats"</strong> - voir <a target="_blank" href="<?php echo BIBLIOTHEQUEARTISTES_PLUGIN_WEB . '/images/autres-formats.png'; ?>">copie d'écran</a></li>
     <li>Dans la boite de dialogue d'enregistrement, choisissez <strong>CSV (séparateur virgule)</strong> dans la zone <strong>Type</strong> - voir <a target="_blank" href="<?php echo BIBLIOTHEQUEARTISTES_PLUGIN_WEB . '/images/enregistrer-au-format-csv.png'; ?>">copie d'écran</a></li>
     <li>Cliquez sur le bouton "Choisissez un fichier" ci-dessous</li>
