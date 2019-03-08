@@ -25,6 +25,7 @@ tr, td {
     &nbsp;&nbsp;<button onclick="javascript:history.back();">Précédent</button>
 </form>
 
+
 <style>
 tr.error {
     background:#c98787;
@@ -90,6 +91,7 @@ echo '</table>';
     <br />
     <input type="hidden" name="file" value="<?php echo $tmpFile ?>">
     <input type="hidden" name="import" value="ok">
+    <input type="hidden" name="collection_id" value="<?php echo $_POST['collection_id'] ?>">
     <input type="submit" value="Lancer l'import des notices">
     &nbsp;&nbsp;<button onclick="javascript:history.back();">Précédent</button>
 </form>
