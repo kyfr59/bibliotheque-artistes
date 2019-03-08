@@ -147,6 +147,9 @@ class BibliothequeArtistesImport
         $typeDeDonnee[2]    = "notice_iframe_different";
         $typeDeDonnee[3]    = "good_notice_bad_iframe";
         $typeDeDonnee[4]    = "not_notice_bad_iframe";
+        $typeDeDonnee[5]    = "iframe_approx";
+        $typeDeDonnee[6]    = "notice_same";
+        $typeDeDonnee[7]    = "notice_approx";
 
 		$mapping[1]  		= "itm_Source number";
 		$mapping[4]  		= "itm_Role";
