@@ -92,6 +92,7 @@ class BibliothequeArtistes_CsvController extends Omeka_Controller_AbstractAction
 
             $import = new BibliothequeArtistesImport();
             $import->importFromCsv($lignes, $_POST['collection_id']);
+            $this->_helper->flashMessenger(count($lignes)." lignes importées" , 'success');
             // unlink($this->file);
 
         } elseif ($this->getRequest()->isPost() && $file = $_FILES['file']) {

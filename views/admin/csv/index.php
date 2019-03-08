@@ -8,6 +8,8 @@ echo head(
 );
 ?>
 
+<?php echo flash(); ?>
+
 <p><b>Cette page vous permet d'importer des notices via un fichier CSV.</b></p>
 
 <p>Procédure d'import en CSV : </p>
