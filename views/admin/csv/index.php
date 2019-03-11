@@ -17,7 +17,7 @@ echo head(
 <ul>
     <li>Téléchargez le <a target="_blank" href="<?php echo BIBLIOTHEQUEARTISTES_PLUGIN_WEB ?>modele.xlsx">fichier modèle</a> sur votre ordinateur</li>
     <li>Ouvrez-le avec Microsoft Excel</li>
-    <li>Aidez-vous du <a target="_blank" href="<?php echo BIBLIOTHEQUEARTISTES_PLUGIN_WEB ?>modele.xlsx">document explicatif</a> pour remplir le fichier Excel</li>
+    <li>Aidez-vous du <a target="_blank" href="<?php echo BIBLIOTHEQUEARTISTES_PLUGIN_WEB ?>guide.pdf">document explicatif</a> pour remplir le fichier Excel</li>
     <li>La première ligne est à supprimer, elle est donnée à titre d'exemple, mais la ligne contenant les entêtes doit être conservée</li>
     <li>Vous pouvez utiliser le séparateur <strong>#</strong> pour ajouter plusieurs valeurs dans le même champ, par exemple pour <strong>Français#Anglais</strong> pour ajouter 2 langues</li>
     <li>Il est conseiller de ne pas importer plus de 50 lignes (notices) lors du même import</li>
