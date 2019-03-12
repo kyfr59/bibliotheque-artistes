@@ -19,6 +19,7 @@ echo head(
     <li>Ouvrez-le avec Microsoft Excel</li>
     <li>Aidez-vous du <a target="_blank" href="<?php echo BIBLIOTHEQUEARTISTES_PLUGIN_WEB ?>guide.pdf">document explicatif</a> pour remplir le fichier Excel</li>
     <li>La première ligne est à supprimer, elle est donnée à titre d'exemple, mais la ligne contenant les entêtes doit être conservée</li>
+    <li><b style="color:orangered;">Attention Le titre est obligatoire sinon l'ensemble de la notice ne sera pas versée sur la base</b></li>
     <li>Vous pouvez utiliser le séparateur <strong>#</strong> pour ajouter plusieurs valeurs dans le même champ, par exemple pour <strong>Français#Anglais</strong> pour ajouter 2 langues</li>
     <li>Il est conseiller de ne pas importer plus de 50 lignes (notices) lors du même import</li>
     <li>Une fois le fichier dûment rempli, choisissez <strong>"Enregister sous"</strong>, puis <strong>"Autres formats"</strong> - voir <a target="_blank" href="<?php echo BIBLIOTHEQUEARTISTES_PLUGIN_WEB . '/images/autres-formats.png'; ?>">copie d'écran</a></li>
@@ -31,7 +32,12 @@ echo head(
     <li><b style="color:orangered;">Vérifiez que la prévisualisation ne présente pas de problèmes d'accentuation ou d'apostrophes</b>, si c'est le cas vérifiez que le fichier CSV est bien encodé en UTF-8</li>
     <li>Sur cette fenêtre cliquer sur <strong>"Lancer l'import des notices"</strong>.</li>
     <li>Si tout s'est bien passé, vous revenez à l'écran précédent avec une mention du nombre de lignes importées. Vérifiez qu'il y en a le même nombre que dans votre fichier.</li>
+    <li>Une fois l'import terminé, cliquer sur <strong>"Solr Search"</strong> (dans le menu à gauche)</li>
+    <li>Puis cliquer dans l'onglet <strong>"Index"</strong> et enfin sur le bouton <strong>"Clear and reindex"</strong></li>
+    <li>De retour sur le front office, rafraichisser votre page (F5)</li>
+    <li>C'est terminé, vos notices sont intégrées à la bases et accessibles depuis le moteur de recherche du site</li>
 </ul>
+
 
 
 
