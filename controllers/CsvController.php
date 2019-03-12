@@ -108,7 +108,7 @@ class BibliothequeArtistes_CsvController extends Omeka_Controller_AbstractAction
 
                 $line = $this->prepareLigne($line);
 
-                if (empty($line[2]) && empty($line[3]) && empty($line[4])) { // Passe si le nom, prénom et titre est vide
+                if (empty($line[5])) { // Passe si le nom, prénom et titre est vide
                     continue;
                 }
 
